@@ -8,10 +8,13 @@ if [ $# -eq 1 ]
 then
     python3 -m venv "$HOME/$venv_dir/$1"
     source "$HOME/$venv_dir/$1/bin/activate"
-    cd $python_dir
+    mkdir -p $python_dir/$1
+    cd $python_dir/$1
 else
     printf "Please select a Python environment to activate:\n"
     select d in $HOME/$venv_dir/*; do test -n "$d" && break; echo ">>> Invalid Selection"; done
     source $d"/bin/activate" 
-    cd $python_dir
+    env_name="${d##*/}"
+    mkdir -p $python_dir/$env_name
+    cd $python_dir/$env_name
 fi
